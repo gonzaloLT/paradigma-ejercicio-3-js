@@ -1,15 +1,14 @@
-const readline = require('readline-sync');
-const funciones = require('./funciones');
-const Menu = require('./menu');
+const readline = require("readline-sync");
+const funciones = require("./funciones");
+const Menu = require("./menu");
 const tareas = [];
 
+let titulo;
 let opcion = 0;
 let opcionSubMenus = 0;
 let indiceTarea = 0;
 let editar;
-
-
-
+const tareasPendientes = [];
 //Carga de prueba
 funciones.crearTarea("Aprender HTML", tareas);
 funciones.crearTarea("Aprender CSS", tareas);
@@ -17,141 +16,70 @@ funciones.crearTarea("Aprender Javascript", tareas);
 
 do {
   Menu.principal();
-  opcion = readline.questionInt('Seleccione una opcion: ');
+  opcion = readline.questionInt("Seleccione una opcion: ");
 
   switch (opcion) {
     case 1:
       Menu.opcion1();
-      opcionSubMenus = readline.questionInt('Seleccione una opcion: ');
+      opcionSubMenus = readline.questionInt("Seleccione una opcion: ");
 
       switch (opcionSubMenus) {
         case 1:
-          
-          if(tareas.length === 0){
+          if (tareas.length === 0) {
             console.log("No tiene tareas ingresadas");
           } else {
-            console.log('Estas son todas tus tareas');
-            funciones.mostrarTodasTareas(tareas);    
-            console.log("Deseas ver los detalles de alguna?");
-            indiceTarea = readline.question("Introduce el numero para verla o 0 para volver: ")
-            if (indiceTarea === 0){
-              console.log("Selecciono volver");
-            } else {
-
-              indiceTarea--;
-              console.log(indiceTarea);
-              funciones.toString(tareas[indiceTarea]);
-              editar = readline.question("Si deseas editarla presiona E, sino cualquier tecla para volver: ")
-              if(editar.toLowerCase() === 'e'){
-                funciones.editarTarea(tareas, indiceTarea);
-
-              }
+            console.log("Estas son todas tus tareas");
+            funciones.mostrarTodasTareas(tareas);
+            funciones.detalles(tareas);
+            editar = readline.question(
+              "Si deseas editarla presiona E, sino cualquier tecla para volver: "
+            );
+            if (editar.toLowerCase() === "e") {
+              funciones.editarTarea(tareas, indiceTarea);
             }
           }
           break;
         case 2:
-          console.log('Estas son todas tus tareas pendientes');
           funciones.mostrarTareasPendientes(tareas);
           break;
         case 3:
-          console.log('Estas son todas tus tareas en curso');
+          console.log("Estas son todas tus tareas en curso");
           funciones.mostrarTareasEnCurso(tareas);
           break;
         case 4:
-          console.log('Estas son todas tus tareas terminadas');
+          console.log("Estas son todas tus tareas terminadas");
           funciones.mostrarTareasTerminadas(tareas);
           break;
         case 0:
-          console.log('Ha seleccionado volver al menú anterior');
+          console.log("Ha seleccionado volver al menú anterior");
           break;
         default:
-          console.log('Ha seleccionado una respuesta no válida, vuelva a intentarlo');
+          console.log("Ha seleccionado una respuesta no válida");
           break;
       }
       break;
     case 2:
-      Menu.opcion2();
-      const titulo = readline.question('Introduce el título de la tarea: ');
+      titulo = readline.question("Introduce el titulo de la tarea a buscar: ");
       funciones.buscarTarea(tareas, titulo);
       break;
     case 3:
-      console.log('Estás creando una tarea.');
-      // Implementa lógica para capturar entrada del usuario para crear una nueva tarea.
+      console.log("Estás creando una nueva tarea.");
+      titulo = readline.question("1. Ingresa el titulo: ");
+      funciones.crearTarea(titulo, tareas);
+      descripcion = readline.question("2. Ingresa la descripcion: ");
+      tareas[tareas.length-1].descripcion = descripcion;
+
       break;
     case 0:
-      console.log('Ha salido del programa');
+      console.log("Ha salido del programa");
       break;
     default:
-      console.log('Ha seleccionado una respuesta no válida, vuelva a intentarlo');
+      console.log(
+        "Ha seleccionado una respuesta no válida, vuelva a intentarlo"
+      );
       break;
   }
 } while (opcion !== 0);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*const readline = require('readline-sync');
 const funciones = require('./funciones');

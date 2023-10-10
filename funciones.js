@@ -1,4 +1,5 @@
-const readline = require('readline-sync');
+const readline = require("readline-sync");
+let permitirEdicion = true;
 
 function crearTarea(titulo, tareas) {
   const tarea = {
@@ -48,7 +49,7 @@ function mostrarTareasTerminadas(tareas) {
 
 function buscarTarea(tareas, titulo) {
   const tareaBuscada = tareas.filter(
-    (tarea) => tarea.titulo.toLowerCase() === titulo
+    (tarea) => tarea.titulo.toLowerCase() === titulo.toLowerCase()
   );
   if (tareaBuscada.length === 0) {
     console.log("No hay tareas relacionadas con la busqueda");
@@ -70,33 +71,48 @@ function cambiarEstado(tarea, nuevoEstado) {
   }
 }
 
-function toString(tarea){
-  console.log(`Titulo: ${tarea.titulo}\nDescripcion: ${tarea.descripcion}\nEstado: ${tarea.estado}\nFecha de creacion: ${tarea.fechaCreacion}\nFecha de vencimiento: ${tarea.fechaVencimiento}\nDificultad: ${tarea.dificultad}\n\n\n`) ;
+function detalles(tarea) {
+  console.log("Deseas ver los detalles de alguna?");
+  indiceTarea = readline.question(
+    "Introduce el numero para verla o 0 para volver: "
+  );
+  if (indiceTarea == 0) {
+    console.log("Selecciono volver");
+  } else {
+    indiceTarea--;
+    console.log(
+      `Titulo: ${tarea[indiceTarea].titulo}\nDescripcion: ${tarea[indiceTarea].descripcion}\nEstado: ${tarea[indiceTarea].estado}\nFecha de creacion: ${tarea[indiceTarea].fechaCreacion}\nFecha de vencimiento: ${tarea[indiceTarea].fechaVencimiento}\nDificultad: ${tarea[indiceTarea].dificultad}\n\n\n`
+    );
+  }
 }
 
-
-function editarTarea(tarea, indice){
+function editarTarea(tarea, indice) {
   console.log(`Estas editando la tarea ${tarea[indice].titulo}`);
-  console.log("-Si deseas mantener los valores del atributo simplemente dejalo en blanco.");
+  console.log(
+    "-Si deseas mantener los valores del atributo simplemente dejalo en blanco."
+  );
   console.log("-Si deseas dejar en blanco un atributo deja un espacio");
   const descripcion = readline.question("1. Ingresa la descripcion: ");
-  const estado = readline.question("2. Ingresa el estado (Pendiente / En curso / Terminada / Cancelada): ");
-  const dificultad = readline.question("3. Ingresa la dificultad (Facil / Medio / Dificil): ");
+  const estado = readline.question(
+    "2. Ingresa el estado (Pendiente / En curso / Terminada / Cancelada): "
+  );
+  const dificultad = readline.question(
+    "3. Ingresa la dificultad (Facil / Medio / Dificil): "
+  );
   const vencimiento = readline.question("4. Vencimiento: ");
 
-  if(descripcion !== ""){
+  if (descripcion !== "") {
     tarea[indice].descripcion = descripcion.toLowerCase();
   }
-  if(estado !== ""){
+  if (estado !== "") {
     tarea[indice].estado = estado.toLowerCase();
   }
-  if(dificultad !== ""){
+  if (dificultad !== "") {
     tarea[indice].dificultad = dificultad.toLowerCase();
   }
-  if(vencimiento !== ""){
+  if (vencimiento !== "") {
     tarea[indice].vencimiento = vencimiento;
   }
-
 }
 
 module.exports = {
@@ -107,6 +123,7 @@ module.exports = {
   mostrarTareasTerminadas,
   buscarTarea,
   cambiarEstado,
-  toString,
-  editarTarea
+  detalles,
+  editarTarea,
+  permitirEdicion
 };
