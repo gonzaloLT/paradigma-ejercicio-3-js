@@ -1,191 +1,215 @@
-//Lista donde se van a almacenar las tareas
+const readline = require('readline-sync');
+const funciones = require('./funciones');
+const Menu = require('./menu');
 const tareas = [];
 
-//VARIABLES
 let opcion = 0;
-let opcionSubMenus= 0;
-//Funcion para crear una tarea y agregarla a la lista
-//Falta para agregar fecha de vencimiento
-function crearTarea(titulo, descripcion, dificultad){
-    const tarea = {
-        titulo: titulo,
-        estado: "pendiente",
-        descripcion: descripcion || " ",
-        fechaCreacion: Date(),
-        dificultad: dificultad || "facil",
-        fechaVencimiento: null,
-    }
+let opcionSubMenus = 0;
 
-    tareas.push(tarea);
-}
+do {
+  Menu.principal();
+  opcion = readline.questionInt('Seleccione una opción: ');
 
-//Funcion para cambiar el estado de una tarea
-function cambiarEstado(tarea, nuevoEstado){
-    //Falta agregar controlador en caso de no encontrar
-    for(let i=0; i < tareas.length; i++){
-        if (tareas[i].titulo === tarea){
-            tareas[i].estado = nuevoEstado;
-        }
-    }
-}
+  switch (opcion) {
+    case 1:
+      Menu.opcion1();
+      opcionSubMenus = readline.questionInt('Seleccione una opción: ');
 
-//Funcion para mostrar tarea
-function mostrarTarea(tarea){
-    console.log("Titulo:", tarea.titulo);
-    console.log("Estado: ", tarea.estado);
-    console.log("Descripcion: ", tarea.descripcion);
-    console.log("Fecha de creacion: ", tarea.fechaCreacion);
-    console.log("Dificultad: ", tarea.dificultad);
-    console.log("Fecha de vencimiento: ", tarea.fechaVencimiento);
-    console.log("______________________________________");
-    console.log("");
-}
-
-//Funcion para buscar tarea
-function buscarTarea(tarea){
-    let bandera=0;
-    for(let i=0; i<tareas.length; i++){
-        if (tareas[i].titulo===tarea){
-            mostrarTarea(tareas[i]);
-            bandera=1;
-        }
-    }
-    if(bandera!=1){
-        console.log("");
-        console.log("No se encontro una tarea con ese nombre");
-    }
-}
-
-
-
-//Prueba
-//crearTarea("Comprar", "ropa para mi novia", "dificil");
-//crearTarea("Lavar", "lavar auto");
-//console.log();
-
-
-do{
-    console.log("Bienvenido");
-    console.log("");
-    console.log("Que deseas hacer?");
-    console.log("");
-    console.log("[1] Ver mis tareas");
-    console.log("[2] Buscar una tarea");
-    console.log("[3] Agregar una tarea");
-    console.log("[0] Salir");
-
-    
-
-    //Falta agregar para ingresar opcion por teclado
-
-    switch(opcion){
-        case 1://Menu de ver mis tareas
-            console.log("Seleccionaste ver mis tareas");
-            console.log("");
-            console.log("Que tareas deseas ver?");
-            console.log("");
-            console.log("[1] Todas");
-            console.log("[2] Pendientes");
-            console.log("[3] En curso");
-            console.log("[4] Completadas");
-            console.log("[0] Volver");
-
-            //Falta agregar para ingresar opcion por teclado
-
-            switch(opcionSubMenus){
-                case 1://Mostrar todas las tareas
-                    console.log("Selecciono mostrar todas las tareas");
-                    console.log("");
-                    for(let i=0; i<tareas.length; i++){
-                        mostrarTarea(tareas[i]);
-                    }
-
-                    //Falta agregar mensaje en caso de que no haya tareas cargadas
-                    opcion =0;
-                    break;
-                case 2://Mostrar todas las tareas pendientes
-                    console.log("Selecciono mostrar todas las tareas pendientes");
-                    console.log("");
-                    for(let i=0; i<tareas.length; i++){
-                        if(tareas[i].estado === "Pendiente" || tareas[i].estado === "pendiente" ){
-                            mostrarTarea(tareas[i]);
-                        }
-                    }
-
-                    
-                    //Falta agregar mensaje en caso de que no haya tareas cargadas
-                    break;
-                case 3://Mostrar todas las tareas en curso
-                    console.log("Selecciono mostrar todas las tareas en curso");
-                    console.log("");
-                    for(let i=0; i<tareas.length; i++){
-                        if(tareas[i].estado === "En curso" || tareas[i].estado === "en curso" ){
-                            mostrarTarea(tareas[i]);
-                        }
-                    }
-                    //Falta agregar mensaje en caso de que no haya tareas cargadas
-
-                    break;
-                case 4://Mostrar todas las tareas terminadas
-                    console.log("Selecciono mostrar todas las tareas pendientes");
-                    console.log("");
-                    for(let i=0; i<tareas.length; i++){
-                        if(tareas[i].estado === "Pendiente" || tareas[i].estado === "pendiente" ){
-                            mostrarTarea(tareas[i]);
-                        }
-                    }
-                    //Falta agregar mensaje en caso de que no haya tareas cargadas
-
-                    break;
-                case 0:
-                    console.log("Ha seleccionado volver al menu anterior");
-                    break;
-                default:
-                    console.log("Ha seleccionado una respuesta no valida, vuelva a intentarlo");
-                    break;
-            }
-            break;
+      switch (opcionSubMenus) {
+        case 1:
+          console.log('Estas son todas tus tareas');
+          funciones.mostrarTodasTareas(tareas);
+          break;
         case 2:
-            //Menu de buscar una tarea
-            console.log("Selecciono buscar una tarea");
-            console.log("");
-            console.log("Ingrese el titulo de la tarea que desea buscar");
-            console.log("");
-            let tareaABuscar;
-            //Falta poner para ingresar nombre por teclado
-
-            buscarTarea(tareaABuscar);
-
-
-            break;
+          console.log('Estas son todas tus tareas pendientes');
+          funciones.mostrarTareasPendientes(tareas);
+          break;
         case 3:
-            //Menu de agregar una tarea
-            console.log("Ha selecionado agregar una tarea");
-            console.log("");
-            
-            console.log("Ingrese el titulo de su tarea");
-            console.log("");
-            let titulo;
-
-            console.log("Ingrese la descripcion de su tarea (o dejelo vacio)");
-            console.log("");
-            let descripcion;
-
-            console.log("Ingrese la dificultad de su tarea(Facil, Medio o Dificil)");
-            console.log("");
-            let dificultad;
-
-            //Falta agregar ingresar por teclado titulo, descripcion y dificultad
-
-            crearTarea(titulo, descripcion, dificultad);
-
-            break;
+          console.log('Estas son todas tus tareas en curso');
+          funciones.mostrarTareasEnCurso(tareas);
+          break;
+        case 4:
+          console.log('Estas son todas tus tareas terminadas');
+          funciones.mostrarTareasTerminadas(tareas);
+          break;
         case 0:
-            console.log("Ha salido del programa");
-            break;
+          console.log('Ha seleccionado volver al menú anterior');
+          break;
         default:
-            console.log("Ha seleccionado una respuesta no valida, vuelva a intentarlo");
-            break;
-    }
+          console.log('Ha seleccionado una respuesta no válida, vuelva a intentarlo');
+          break;
+      }
+      break;
+    case 2:
+      Menu.opcion2();
+      const titulo = readline.question('Introduce el título de la tarea: ');
+      funciones.buscarTarea(tareas, titulo);
+      break;
+    case 3:
+      console.log('Estás creando una tarea.');
+      // Implementa lógica para capturar entrada del usuario para crear una nueva tarea.
+      break;
+    case 0:
+      console.log('Ha salido del programa');
+      break;
+    default:
+      console.log('Ha seleccionado una respuesta no válida, vuelva a intentarlo');
+      break;
+  }
+} while (opcion !== 0);
 
-}while(opcion!=0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*const readline = require('readline-sync');
+const funciones = require('./funciones');
+const Menu = require('./menu');
+const tareas = [];
+
+let opcion = 0;
+let opcionSubMenus = 0;
+
+
+do {
+  Menu.principal;
+
+  //Falta agregar para ingresar opcion por teclado
+
+  switch (opcion) {
+    case 1:
+      Menu.opcion1;
+
+      //Falta agregar para ingresar opcion por teclado
+
+      switch (opcionSubMenus) {
+        case 1:
+          console.log("Estas son todas tus tareas");
+          console.log("");
+          funciones.mostrarTodasTareas;
+
+          //Falta agregar mensaje en caso de que no haya tareas cargadas, agregar ingresar por teclado y agregar switch de opciones de detalles de tareas
+
+          break;
+        case 2:
+          console.log("Estas son todas tus tareas pendientes");
+          console.log("");
+          funciones.mostrarTareasPendientes;
+
+          //Falta agregar mensaje en caso de que no haya tareas cargadas
+          break;
+        case 3:
+          console.log("Estas son todas tus tareas en curso");
+          console.log("");
+          funciones.mostrarTareasEnCurso;
+          //Falta agregar mensaje en caso de que no haya tareas cargadas
+
+          break;
+        case 4:
+          console.log("Estas son todas tus tareas terminadas");
+          console.log("");
+          funciones.mostrarTareasTerminadas;
+          //Falta agregar mensaje en caso de que no haya tareas cargadas
+
+          break;
+        case 0:
+          console.log("Ha seleccionado volver al menu anterior");
+          break;
+        default:
+          console.log(
+            "Ha seleccionado una respuesta no valida, vuelva a intentarlo"
+          );
+          break;
+      }
+      break;
+    case 2:
+      Menu.opcion2;
+
+      funciones.buscarTarea(tareas, titulo);
+
+      break;
+    case 3:
+      console.log(`Estas creando una tarea.\n\n`);
+      console.log("1. Ingresa el titulo: ");
+      console.log("2. Ingresa la descripcion: ");
+      console.log(`3. Estado (pendiente / en curso / terminada / cancelada): `)
+      console.log(`4. Dificultad (facil, medio, dificil)`);
+      console.log(`5. Vencimiento: `);
+
+
+
+
+      break;
+    case 0:
+      console.log("Ha salido del programa");
+      break;
+    default:
+      console.log(
+        "Ha seleccionado una respuesta no valida, vuelva a intentarlo"
+      );
+      break;
+  }
+} while (opcion != 0);
+*/

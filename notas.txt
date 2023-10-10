@@ -1,0 +1,4 @@
+Hay que instalar readline-sync para poder utilizarlo, se ingresa en la terminal lo siguiente: npm install readline-sync
+readline.question(prompt): Lee una línea de entrada del usuario y devuelve la cadena ingresada.
+readline.questionInt(prompt): Lee una línea de entrada del usuario y devuelve el valor como un número entero.
+readline.questionFloat(prompt): Lee una línea de entrada del usuario y devuelve el valor como un número de punto flotante.
