@@ -3,7 +3,8 @@ const funciones = require("./funciones");
 const Menu = require("./menu");
 const tareas = [];
 
-let titulo;
+let titulo, descripcion, estado, dificultad, vencimientoTexto;
+let vencimiento;
 let opcion = 0;
 let opcionSubMenus = 0;
 let indiceTarea = 0;
@@ -67,9 +68,22 @@ do {
       titulo = readline.question("1. Ingresa el titulo: ");
       funciones.crearTarea(titulo, tareas);
       descripcion = readline.question("2. Ingresa la descripcion: ");
-      tareas[tareas.length-1].descripcion = descripcion;
-
-      break;
+      tareas[tareas.length - 1].descripcion = descripcion;
+      estado = readline.question(
+        "3. Estado (pendiente / en curso / terminada / cancelada): "
+      );
+      tareas[tareas.length - 1].estado = estado;
+      dificultad = readline.question(
+        "4. Dificultad (facil / medio / dificil): "
+      );
+      tareas[tareas.length - 1].dificultad = dificultad;
+      vencimientoTexto = readline.question("5. Vencimiento (YYYY/MM/DD): ");
+      vencimiento = new Date(vencimientoTexto);
+      if (!isNaN(vencimiento.getTime())) {
+        tareas[tareas.length - 1].fechaVencimiento = vencimiento;
+      } else {
+        console.log("El formato no es correcto, la fecha no se cargo");
+      }
     case 0:
       console.log("Ha salido del programa");
       break;
@@ -80,93 +94,3 @@ do {
       break;
   }
 } while (opcion !== 0);
-
-/*const readline = require('readline-sync');
-const funciones = require('./funciones');
-const Menu = require('./menu');
-const tareas = [];
-
-let opcion = 0;
-let opcionSubMenus = 0;
-
-
-do {
-  Menu.principal;
-
-  //Falta agregar para ingresar opcion por teclado
-
-  switch (opcion) {
-    case 1:
-      Menu.opcion1;
-
-      //Falta agregar para ingresar opcion por teclado
-
-      switch (opcionSubMenus) {
-        case 1:
-          console.log("Estas son todas tus tareas");
-          console.log("");
-          funciones.mostrarTodasTareas;
-
-          //Falta agregar mensaje en caso de que no haya tareas cargadas, agregar ingresar por teclado y agregar switch de opciones de detalles de tareas
-
-          break;
-        case 2:
-          console.log("Estas son todas tus tareas pendientes");
-          console.log("");
-          funciones.mostrarTareasPendientes;
-
-          //Falta agregar mensaje en caso de que no haya tareas cargadas
-          break;
-        case 3:
-          console.log("Estas son todas tus tareas en curso");
-          console.log("");
-          funciones.mostrarTareasEnCurso;
-          //Falta agregar mensaje en caso de que no haya tareas cargadas
-
-          break;
-        case 4:
-          console.log("Estas son todas tus tareas terminadas");
-          console.log("");
-          funciones.mostrarTareasTerminadas;
-          //Falta agregar mensaje en caso de que no haya tareas cargadas
-
-          break;
-        case 0:
-          console.log("Ha seleccionado volver al menu anterior");
-          break;
-        default:
-          console.log(
-            "Ha seleccionado una respuesta no valida, vuelva a intentarlo"
-          );
-          break;
-      }
-      break;
-    case 2:
-      Menu.opcion2;
-
-      funciones.buscarTarea(tareas, titulo);
-
-      break;
-    case 3:
-      console.log(`Estas creando una tarea.\n\n`);
-      console.log("1. Ingresa el titulo: ");
-      console.log("2. Ingresa la descripcion: ");
-      console.log(`3. Estado (pendiente / en curso / terminada / cancelada): `)
-      console.log(`4. Dificultad (facil, medio, dificil)`);
-      console.log(`5. Vencimiento: `);
-
-
-
-
-      break;
-    case 0:
-      console.log("Ha salido del programa");
-      break;
-    default:
-      console.log(
-        "Ha seleccionado una respuesta no valida, vuelva a intentarlo"
-      );
-      break;
-  }
-} while (opcion != 0);
-*/
