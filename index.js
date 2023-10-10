@@ -5,20 +5,49 @@ const tareas = [];
 
 let opcion = 0;
 let opcionSubMenus = 0;
+let indiceTarea = 0;
+let editar;
+
+
+
+//Carga de prueba
+funciones.crearTarea("Aprender HTML", tareas);
+funciones.crearTarea("Aprender CSS", tareas);
+funciones.crearTarea("Aprender Javascript", tareas);
 
 do {
   Menu.principal();
-  opcion = readline.questionInt('Seleccione una opción: ');
+  opcion = readline.questionInt('Seleccione una opcion: ');
 
   switch (opcion) {
     case 1:
       Menu.opcion1();
-      opcionSubMenus = readline.questionInt('Seleccione una opción: ');
+      opcionSubMenus = readline.questionInt('Seleccione una opcion: ');
 
       switch (opcionSubMenus) {
         case 1:
-          console.log('Estas son todas tus tareas');
-          funciones.mostrarTodasTareas(tareas);
+          
+          if(tareas.length === 0){
+            console.log("No tiene tareas ingresadas");
+          } else {
+            console.log('Estas son todas tus tareas');
+            funciones.mostrarTodasTareas(tareas);    
+            console.log("Deseas ver los detalles de alguna?");
+            indiceTarea = readline.question("Introduce el numero para verla o 0 para volver: ")
+            if (indiceTarea === 0){
+              console.log("Selecciono volver");
+            } else {
+
+              indiceTarea--;
+              console.log(indiceTarea);
+              funciones.toString(tareas[indiceTarea]);
+              editar = readline.question("Si deseas editarla presiona E, sino cualquier tecla para volver: ")
+              if(editar.toLowerCase() === 'e'){
+                funciones.editarTarea(tareas, indiceTarea);
+
+              }
+            }
+          }
           break;
         case 2:
           console.log('Estas son todas tus tareas pendientes');

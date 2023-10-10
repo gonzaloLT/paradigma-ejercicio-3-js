@@ -1,4 +1,6 @@
-function crearTarea(titulo) {
+const readline = require('readline-sync');
+
+function crearTarea(titulo, tareas) {
   const tarea = {
     titulo: titulo,
     estado: "pendiente",
@@ -68,6 +70,35 @@ function cambiarEstado(tarea, nuevoEstado) {
   }
 }
 
+function toString(tarea){
+  console.log(`Titulo: ${tarea.titulo}\nDescripcion: ${tarea.descripcion}\nEstado: ${tarea.estado}\nFecha de creacion: ${tarea.fechaCreacion}\nFecha de vencimiento: ${tarea.fechaVencimiento}\nDificultad: ${tarea.dificultad}\n\n\n`) ;
+}
+
+
+function editarTarea(tarea, indice){
+  console.log(`Estas editando la tarea ${tarea[indice].titulo}`);
+  console.log("-Si deseas mantener los valores del atributo simplemente dejalo en blanco.");
+  console.log("-Si deseas dejar en blanco un atributo deja un espacio");
+  const descripcion = readline.question("1. Ingresa la descripcion: ");
+  const estado = readline.question("2. Ingresa el estado (Pendiente / En curso / Terminada / Cancelada): ");
+  const dificultad = readline.question("3. Ingresa la dificultad (Facil / Medio / Dificil): ");
+  const vencimiento = readline.question("4. Vencimiento: ");
+
+  if(descripcion !== ""){
+    tarea[indice].descripcion = descripcion.toLowerCase();
+  }
+  if(estado !== ""){
+    tarea[indice].estado = estado.toLowerCase();
+  }
+  if(dificultad !== ""){
+    tarea[indice].dificultad = dificultad.toLowerCase();
+  }
+  if(vencimiento !== ""){
+    tarea[indice].vencimiento = vencimiento;
+  }
+
+}
+
 module.exports = {
   crearTarea,
   mostrarTodasTareas,
@@ -76,4 +107,6 @@ module.exports = {
   mostrarTareasTerminadas,
   buscarTarea,
   cambiarEstado,
+  toString,
+  editarTarea
 };
