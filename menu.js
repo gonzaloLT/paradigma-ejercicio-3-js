@@ -14,6 +14,7 @@ function opcion1() {
   console.log("[2] Pendientes");
   console.log("[3] En curso");
   console.log("[4] Terminadas");
+  console.log("[5] Canceladas")
   console.log("[0] Salir");
 }
 
